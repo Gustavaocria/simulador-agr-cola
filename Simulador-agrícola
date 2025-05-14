@@ -208,3 +208,27 @@ def simular_lavoura():
 
 if __name__ == "__main__":
     simular_lavoura()
+print(f"\nAnalisando culturas para a região: {regiao}\n")
+
+for cultura in culturas:
+    if regiao in cultura["regioes_compatíveis"]:
+        lucro_bruto = cultura["rendimento_por_hectare"] * cultura["preco_por_tonelada"]
+        lucro_liquido = lucro_bruto - cultura["custo_por_hectare"]
+        resultado = {
+            'nome': cultura["nome"],
+            'lucro_liquido': lucro_liquido,
+            'tempo_crescimento': cultura["tempo_crescimento"]
+        }
+        resultados.append(resultado)
+        print(f"{cultura['nome']}:")
+        print(f" - Tempo de crescimento: {cultura['tempo_crescimento']} dias")
+        print(f" - Rendimento por hectare: {cultura['rendimento_por_hectare']} toneladas")
+        print(f" - Lucro bruto por hectare: R$ {lucro_bruto:.2f}")
+        print(f" - Lucro líquido por hectare: R$ {lucro_liquido:.2f}\n")
+
+if resultados:
+    melhor_opcao = max(resultados, key=lambda x: x['lucro_liquido'])
+    print(f"A melhor opção de cultivo para a região {regiao} é: {melhor_opcao['nome']}")
+    print(f"Lucro líquido estimado por hectare: R$ {melhor_opcao['lucro_liquido']:.2f}")
+else:
+    print("Nenhuma cultura compatível encontrada para essa região.")
